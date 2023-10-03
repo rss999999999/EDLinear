@@ -7,38 +7,32 @@
  */
 import java.util.Scanner;
 
-import java.util.Scanner;
-
 public class LinearityChecker {
 
     public static void main(String[] args) {
-        // Declaração de variáveis
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Insira a equação:");
         String equation = scanner.nextLine();
         String[] terms = equation.split("=");
-        String leftSide = terms[0];
-        String rightSide = terms[1];
 
-        // Verificação da linearidade do lado esquerdo da equação
-        boolean leftSideLinear = isLinear(leftSide);
+        boolean isLinearSecondOrder = checkLinearity(terms[0]) && checkLinearity(terms[1]);
 
-        // Verificação da linearidade do lado direito da equação
-        boolean rightSideLinear = isLinear(rightSide);
-
-        // Impressão do resultado
-        if (leftSideLinear && rightSideLinear) {
-            System.out.println("A equação é linear.");
+        if (isLinearSecondOrder) {
+            System.out.println("A equação é linear de segunda ordem.");
         } else {
-            System.out.println("A equação não é linear.");
+            System.out.println("A equação não é linear de segunda ordem.");
         }
     }
 
-    private static boolean isLinear(String equation) {
-        for (char c : equation.toCharArray()) {
-            if (c >= 'x' && c <= 'z') {
-                return false;
-            }
+    private static boolean checkLinearity(String equation) {
+        if (equation.contains("''") || equation.contains("'")) {
+            return false;
         }
+
+        if (!equation.contains("y''") || !equation.contains("y'") || !equation.contains("y")) {
+            return false;
+        }
+
         return true;
     }
 }
